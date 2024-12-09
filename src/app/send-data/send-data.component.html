@@ -1,0 +1,100 @@
+<div
+  class="form-container mx-auto p-6 max-w-md bg-gray-100 rounded-lg shadow-md"
+>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="space-y-4">
+    <!-- Name Input -->
+    <div>
+      <label for="name" class="block text-sm font-medium text-gray-700"
+        >Name:</label
+      >
+      <input
+        id="name"
+        type="text"
+        formControlName="name"
+        class="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none"
+        [ngClass]="{
+          'border-red-500 shadow-[inset_0_0_15px_rgb(239,68,68)]':
+            form.get('name')?.invalid && form.get('name')?.touched
+        }"
+      />
+
+      <p
+        *ngIf="form.get('name')?.invalid && form.get('name')?.touched"
+        class="text-red-500 text-xs italic"
+      >
+        Name is required.
+      </p>
+    </div>
+
+    <!-- Email Input -->
+    <div>
+      <label for="email" class="block text-sm font-medium text-gray-700"
+        >Email:</label
+      >
+      <input
+        id="email"
+        type="email"
+        formControlName="email"
+        class="mt-1 block w-full px-3 py-2 border rounded-md shadow-sm focus:outline-none"
+        [ngClass]="{
+          'border-red-500 shadow-[inset_0_0_15px_rgb(239,68,68)]':
+            form.get('email')?.invalid && form.get('email')?.touched
+        }"
+      />
+      <p
+        *ngIf="
+          form.get('email')?.hasError('required') && form.get('email')?.touched
+        "
+        class="text-red-500 text-xs italic"
+      >
+        Email is required.
+      </p>
+      <p
+        *ngIf="
+          form.get('email')?.hasError('email') && form.get('email')?.touched
+        "
+        class="text-red-500 text-xs italic"
+      >
+        Enter a valid email address.
+      </p>
+    </div>
+
+    <!-- File Input -->
+    <div>
+      <label for="file" class="block text-sm font-medium text-gray-700"
+        >Upload Image:</label
+      >
+      <input
+        id="file"
+        type="file"
+        (change)="onFileChange($event)"
+        class="mt-1 block w-full text-sm text-gray-700 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-white file:bg-blue-500 file:hover:bg-blue-600"
+      />
+      <p
+        *ngIf="form.get('file')?.invalid && form.get('file')?.touched"
+        class="text-red-500 text-xs italic"
+      >
+        File is required.
+      </p>
+    </div>
+
+    <!-- Submit Button -->
+    <button
+      type="submit"
+      [disabled]="form.invalid"
+      class="w-full py-2 px-4 text-white bg-blue-500 rounded-md hover:bg-blue-600 disabled:bg-gray-400"
+    >
+      Submit
+    </button>
+  </form>
+
+  <div
+    *ngIf="successMessage"
+    class="mt-4 p-4 bg-green-100 text-green-700 rounded-md"
+  >
+    {{ successMessage }}
+  </div>
+  <div *ngIf="errorMessage" class="mt-4 p-4 bg-red-100 text-red-700 rounded-md">
+    {{ errorMessage }}
+  </div>
+</div>
